@@ -1,0 +1,142 @@
+{% extends 'base_generic.html' %}
+{% block content %}
+<div dir="rtl">
+    <!-- Search -->
+    <div class="catagory_area ">
+<div class="container " style="margin-top: 10rem">
+            <div class=" single_text">
+                <h2>احجز مع
+                    أفضل دكتور في مصر</h3>
+                <h3>احجز اونلاين او كلم  ١٧٧٥۸</h4>
+                <h4>١٦٠٠٠ دكتور -٤٠٠٠ استاذ واستشاري - اكثر من ۲٠ تخصص</h5>
+                <br>
+            </div>
+            <form  method="GET">
+            <div class="row cat_search" >
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="single_input">
+                        الاسم
+                        {{filter.form.name}}
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="single_input">
+                        العنوان
+                        {{filter.form.address}}
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4">
+                    <div class="single_input">
+                        التخصص
+                        {{filter.form.choice}}
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-10">
+                    <div class="job_btn">
+                        <input type="submit" class="boxed-btn3" value="ابحث هنا">
+                    </div>
+                </div>
+
+            </div>
+            </form> 
+        </div>
+    </div>
+    <!-- endsearch -->
+    <!-- job_listing_area_start  -->
+    {% for doc in docs %}
+        
+
+    <div class="job_listing_area">
+        <div class="container">
+
+            <div class="job_lists">
+                <div class="row">
+                    <div class="col-lg-10 col-md-10" style="height: 16rem;" >
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                <div >
+                                    
+                                    <img  src="{{doc.prof_pic.url}}" alt="" width="100" height="100">
+                                        
+                                </div>
+                                <div class="jobs_conetent">
+                                    <a href="{%url 'job:detail' doc.name %}"><h5>{{doc.name}} </h5></a>
+                                    <h6>{{doc.subtitle}}</h6>
+
+                                    <div class="links_locat">
+                                        <div class="location">
+                                            <p> <i class="fas fa-briefcase-medical"></i> دكتور <span style="color: blue;">{{doc.name}}</span> متخصص في <span style="color: blue;">{{doc.choice}}</span></p>
+                                                <p> <i class="fa fa-map-marker"></i>address : {{doc.address}}</p>
+                                                <p> <i class="fa fa-map-marker"></i> الكشف : <span style="color: blue;">{{doc.price}}</span> جنية</p>
+                                                <p> <i class="fa fa-clock-o"></i> مدة الانتظار : <span style="color: blue;">{{doc.wait}}</span> دقيقة</p>
+                                                <p> <i class="fa fa-clock-o"></i> عدد ساعات العمل : <span style="color: blue;">{{doc.work}}</span> ساعه</p>
+                                                <p> <i class="fa fa-clock-o"></i>رقم الهاتف  :<span style="color: blue;"> 0{{doc.phone}} </span>  </p>
+    
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="jobs_right">
+                                <div class="apply_now">
+                                    <a class="boxed-btn3" href="">حجز كشف</a>
+                                </div>
+
+                                <div class="rating">
+                                    <div class="text-warning">
+                                        <!-- to make image category for clinic image -->
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        </div>
+                                    <div class="rating" >
+                                        <h5>تقييم الدكتور</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <!-- job_listing_area_end  -->
+<div class="container"></div>
+    {% if docs.has_other_pages %}   
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="pagination_wrap">
+                <ul>
+                    
+                    {% if docs.has_previous %}
+                        <li><a href="?page={{docs.previous_page_number}}"> <i class="ti-angle-left"></i> </a></li>
+                    {% endif %}
+
+                    {% for i in docs.paginator.page_range %}
+                        <li><a href="?page={{i}}"><span>{{i}}</span></a></li>
+                    {% endfor %}
+                    
+
+
+                    {% if docs.has_next %}
+                        <li><a href="?page={{docs.next_page_number}}"> <i class="ti-angle-right"></i> </a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+</div>
+
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+
+<div class="container " style="margin-top: 10rem">
+  {% if form.email.errors %}
+  {{ form.email.errors }}
+{% endif %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+      {{ form.as_p }}
+    <input type="submit" value="Signup" class="boxed-btn3 w-100"/>
+  </form>
+  
+  {# Assumes you setup the password_reset view in your URLconf #}
+  </div>
+{% endblock %}

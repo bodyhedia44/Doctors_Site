@@ -1,0 +1,131 @@
+{% extends "base_generic.html" %}
+{% block content %}
+
+<div class="container" style="margin-top: 10rem">
+<div dir="rtl">
+    <!-- bradcam_area  -->
+
+
+
+<div class="bradcam_text " >
+    <h3 >تفاصيل المقاله</h3>
+</div>
+
+  <!--/ bradcam_area  -->
+
+   <!--================Blog Area =================-->
+<section class="blog_area single-post-area section-padding">
+<div class="container">
+    <div class="row">
+    <div class="col-lg-8 posts-list">
+        <div class="single-post">
+            <div class="feature-img">
+                    
+                <img class="img-fluid image-detail" src="{{post.image.url}}" alt="">
+                <div class="jobs_right">
+                    <div class="apply_now">
+                    </div>
+                </div>
+            </div>
+            <div class="blog_details">
+                
+                <h2>{{post.title}}</h2>
+                <p class="excert">{{post.content}}</p></p>
+            </div>
+        </div>
+
+        <div class="blog-author">
+            <div class="media align-items-center">
+                <div class="rtl">
+                <div class="media-body">
+                <a href="#">
+                    <h4>تم النشر بواسطه <span style="color: blue;">{{post.author}} </span> في تاريخ <span style="color: blue;">{{post.time |date:'d M o'}}</span></h4>
+                </a>
+            </div>
+                </div>
+            </div>
+        </div>
+        <div class="comments-area">
+            <h4>Comments</h4>
+            {% if comms %}
+            
+            {% for com in comms %}
+                <!-- comment -->
+                <div class="media">
+                    <div class="media-body " >
+    
+                        <!-- comment -->
+                        <div class="media">
+                            <div class="media-left">
+                                <img class="media-object" src="" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <h4>{{com.name}}</h4>
+                                    
+                                </div>
+                                <p>{{com.comment}}</p>
+                            </div>
+                        </div>
+                        <!-- /comment -->
+                    </div>
+                </div>
+                <!-- /comment -->
+        {% endfor %}
+        {% else %}
+                <div class="media-heading">
+                    <h4>لا يوجد تعليقات حتى الأن ..</h4>
+                </div>
+        {% endif %}
+    
+        </div>
+
+        <div class="comment-form">
+            <h4>Leave a Reply</h4>
+            <form method="POST" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input_field">
+                            {{form}}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="submit_btn">
+                            <button class="boxed-btn3 w-100" type="submit">تعليق</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>        </div>
+    <div class="col-lg-4">
+        <div class="blog_right_sidebar">
+
+            <aside class="single_sidebar_widget popular_post_widget">
+                <h3 class="widget_title">أقدم المقالات</h3>
+
+                {% for ol in old %}
+                    
+            
+                    <div class="media post_item">
+                            <img src="{{ol.image.url}}" alt="" style="width: 30spx; height: 30px;">
+                        <div class="media-body">
+                            <a href="{%url 'blog:single' ol.title %}">
+                                <h3>{{ol.title}}</h3>
+                            </a>
+                            <p>تم النتشر في : <span style="color: #00D363;">{{ol.time |date:'d M o'}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+            </aside>
+
+                </aside>
+        </div>
+    </div>
+    </div>
+</div>
+</section>
+</div>
+</div>
+{% endblock %}
