@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,reverse
 from .models import Post
 from django.shortcuts import get_object_or_404 
 from jobs.forms import AddComment
 from accounts.models import Comment
 from .filter import BFilter
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 # Create your views here.
 
 
@@ -38,3 +39,15 @@ def single(request,slug):
     else:
         form=AddComment()
     return render(request,'single.html',{"post":post,"form":form,"comms":comms,"old":old})
+
+
+
+def like_unlike(request,slug):
+    post=get_object_or_404(Post,title=slug)
+    if request.user in post.like.all():
+        post.like.remove(request.user)
+    
+    else:
+        post.like.add(request.user)
+    return HttpResponse()
+    

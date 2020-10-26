@@ -9,5 +9,6 @@ class Post(models.Model):
     time=models.DateTimeField(auto_now=True)
     content=models.TextField(null=False,blank=False)
     author=models.ForeignKey(User, on_delete=models.CASCADE, blank=True,related_name='author')
+    like=models.ManyToManyField(User,blank=True,related_query_name='like')
     def __str__(self):
         return str(self.title)

@@ -30,6 +30,16 @@
             <div class="blog_details">
                 
                 <h2>{{post.title}}</h2>
+                <form action="{%url 'blog:like' post.title%}" method="post" class='like-form'>
+                    {% csrf_token %}
+                   <button type="submit" style="width: 150px;height: 50px;" id="like-btn{{post.id}}" class=" btn btn-primary btn-lg" >
+                {% if request.user not in post.like.all %}
+                    Like
+                {% else %}
+                    Unlike
+                {% endif %}</button>
+                <p class="like-count">&nbsp;&nbsp;{{post.like.count}}</p>
+               </form>
                 <p class="excert">{{post.content}}</p></p>
             </div>
         </div>
@@ -128,4 +138,45 @@
 </section>
 </div>
 </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript"> 
+    $('.like-form').submit(function(e){
+    e.preventDefault()
+    $.ajax( 
+    { 
+        type:"POST", 
+        url: "{% url 'blog:like' post.title %}", 
+        data:{ 
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+            "slug":"{{post.title}}",
+        }, 
+       success: function(response) {         
+        console.log(1)
+        
+    },
+    error: function(response) {
+        console.log(2)
+        const likeText = $("#like-btn{{post.id}}").text()
+        const trim = $.trim(likeText)
+        console.log(trim)
+        const likes = $(`.like-count`).text()
+        const trimCount = parseInt(likes)
+        let res;
+        if(trim === 'Unlike') {
+            $("#like-btn{{post.id}}").text('Like')
+            res = trimCount - 1
+        } else {
+            $("#like-btn{{post.id}}").text('Unlike')
+            res = trimCount + 1
+        }
+
+        $(`.like-count`).text(res)
+    },
+    dataType: "json", 
+
+    }
+   ,)  
+});
+</script>
 {% endblock %}
